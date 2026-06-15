@@ -1,0 +1,25 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
+
+export default defineConfig({
+  root: 'frontend',
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: { '@': path.resolve(__dirname, 'frontend/src') },
+  },
+  build: {
+    outDir: path.resolve(__dirname, 'dist'),
+    emptyOutDir: true,
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        cookieDomainRewrite: 'localhost',
+      },
+    },
+  },
+});

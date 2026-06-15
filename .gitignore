@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Claude Code
+.claude/
+
+# Bun
+.bun/
+
+# Test artifacts
+/tmp/pool-tracker-*.db
+e2e/playwright-report/
+e2e/test-results/
