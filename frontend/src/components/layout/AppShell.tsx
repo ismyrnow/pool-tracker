@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { BottomNav } from "./BottomNav";
-import { Fab, type FabAction } from "./Fab";
+import { type FabAction } from "./Fab";
 import { LogTestForm } from "@/components/forms/LogTestForm";
 import { LogChemicalForm } from "@/components/forms/LogChemicalForm";
 import { LogMaintenanceForm } from "@/components/forms/LogMaintenanceForm";
@@ -13,18 +13,12 @@ export function AppShell() {
   const [drawer, setDrawer] = useState<FabAction | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const activeTab =
-    location.pathname === "/history"
-      ? "history"
-      : location.pathname === "/settings"
-        ? "settings"
-        : "dashboard";
+  const activeTab = location.pathname === "/history" ? "history" : "dashboard";
 
-  const handleTabChange = (tab: string) => {
+  const handleTabChange = (tab: "dashboard" | "history") => {
     setFabOpen(false);
     setDrawer(null);
-    if (tab === "dashboard") navigate("/");
-    else navigate(`/${tab}`);
+    navigate(tab === "dashboard" ? "/" : "/history");
   };
 
   const handlePick = (action: FabAction) => {
@@ -50,11 +44,12 @@ export function AppShell() {
         />
       )}
 
-      <Fab open={fabOpen} setOpen={setFabOpen} onPick={handlePick} />
-
       <BottomNav
-        active={activeTab as "dashboard" | "history" | "settings"}
+        active={activeTab}
         onChange={handleTabChange}
+        fabOpen={fabOpen}
+        setFabOpen={setFabOpen}
+        onPick={handlePick}
       />
 
       <LogTestForm open={drawer === "test"} onClose={() => setDrawer(null)} onSaved={handleSaved} />

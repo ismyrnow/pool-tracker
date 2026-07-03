@@ -15,16 +15,21 @@ interface Props {
   onPick: (action: FabAction) => void;
 }
 
+/**
+ * Center speed-dial for the bottom nav. The `+` button sits in-flow within the
+ * nav's center cell; its options fan upward above it. Positioning is owned here
+ * relative to the nav cell — it no longer floats over page content.
+ */
 export function Fab({ open, setOpen, onPick }: Props) {
   return (
-    <div className="absolute right-[18px] bottom-[calc(86px+env(safe-area-inset-bottom))] z-50 flex flex-col items-end gap-3 pointer-events-none">
+    <div className="relative flex justify-center">
       {open && (
-        <div className="flex flex-col items-end gap-2.5 pointer-events-auto">
+        <div className="absolute bottom-full mb-3 z-50 flex flex-col items-center gap-2.5">
           {OPTIONS.map(({ key, label, Icon }) => (
             <button
               key={key}
               onClick={() => onPick(key)}
-              className="flex items-center gap-2.5 h-11 pl-4 pr-1.5 rounded-full bg-background shadow-md border border-border animate-in slide-in-from-bottom-2 fade-in duration-200"
+              className="flex items-center gap-2.5 h-11 pl-4 pr-1.5 rounded-full bg-background shadow-md border border-border whitespace-nowrap animate-in slide-in-from-bottom-2 fade-in duration-200"
             >
               <span className="text-sm font-semibold text-foreground">{label}</span>
               <span className="w-8 h-8 rounded-full grid place-items-center bg-secondary text-primary">
@@ -36,8 +41,9 @@ export function Fab({ open, setOpen, onPick }: Props) {
       )}
       <button
         onClick={() => setOpen(!open)}
+        aria-label="Add log"
         className={cn(
-          "w-14 h-14 rounded-full grid place-items-center bg-primary text-primary-foreground shadow-lg pointer-events-auto transition-transform duration-200",
+          "relative z-50 w-14 h-14 rounded-full grid place-items-center bg-primary text-primary-foreground shadow-lg transition-transform duration-200",
           open && "rotate-45",
         )}
       >
