@@ -1,4 +1,4 @@
-import { FlaskConical } from "lucide-react";
+import { FlaskConical, Settings } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ParameterCard } from "@/components/dashboard/ParameterCard";
@@ -6,9 +6,10 @@ import { MaintenanceSummary } from "@/components/dashboard/MaintenanceSummary";
 import { useDashboard } from "@/hooks/useDashboard";
 import { usePool } from "@/hooks/usePool";
 import { fmtDate, fmtTime, fmtGallons, KIT_TYPE_LABEL, POOL_TYPE_LABEL } from "@/lib/formatters";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 export function DashboardPage() {
+  const navigate = useNavigate();
   const { refreshKey } = useOutletContext<{ refreshKey: number }>();
   const { data } = useDashboard(refreshKey);
   const { pool } = usePool();
@@ -19,9 +20,18 @@ export function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="px-5 pt-2">
-        <h1 className="text-[28px] font-bold tracking-tight leading-tight">Dashboard</h1>
-        {subtitle && <p className="text-[13.5px] text-muted-foreground mt-1">{subtitle}</p>}
+      <div className="px-5 pt-2 flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <h1 className="text-[28px] font-bold tracking-tight leading-tight">Dashboard</h1>
+          {subtitle && <p className="text-[13.5px] text-muted-foreground mt-1">{subtitle}</p>}
+        </div>
+        <button
+          onClick={() => navigate("/settings")}
+          aria-label="Settings"
+          className="mt-1 flex-shrink-0 w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground"
+        >
+          <Settings size={18} />
+        </button>
       </div>
 
       {data?.latestTest && (

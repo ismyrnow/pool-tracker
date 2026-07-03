@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Pencil } from "lucide-react";
+import { ScreenHeader } from "@/components/layout/ScreenHeader";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ interface RowProps {
   onSave: () => void;
   onCancel: () => void;
   saving: boolean;
+  multiline?: boolean;
   children: React.ReactNode;
 }
 
@@ -155,12 +157,10 @@ export function SettingsPage() {
   const rowProps = { onSave: saveField, onCancel: cancelEdit, saving };
 
   return (
-    <div className="flex flex-col gap-4 pb-2">
-      <div className="px-5 pt-2">
-        <h1 className="text-[28px] font-bold tracking-tight leading-tight">Settings</h1>
-      </div>
+    <div className="h-full flex flex-col bg-background">
+      <ScreenHeader title="Settings" />
 
-      <div className="px-5 flex flex-col gap-5">
+      <div className="flex-1 min-h-0 overflow-y-auto px-5 pt-4 pb-8 flex flex-col gap-5">
         {/* Pool Profile */}
         <div className="flex flex-col gap-2">
           <p className="text-[12px] font-bold uppercase tracking-widest text-muted-foreground">
