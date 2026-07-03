@@ -36,6 +36,26 @@ export async function create(userId: string, req: Request): Promise<Response> {
   return Response.json(result, { status: 201 });
 }
 
+export async function update(userId: string, id: number, req: Request): Promise<Response> {
+  const existing = db
+    .query("SELECT id FROM chemical_logs WHERE id = ? AND user_id = ?")
+    .get(id, userId);
+  if (!existing) return Response.json({ error: "Not found" }, { status: 404 });
+
+  const { logged_at, chemical, amount, unit, notes } = await req.json();
+
+  const result = db
+    .query(
+      `UPDATE chemical_logs
+       SET logged_at = ?, chemical = ?, amount = ?, unit = ?, notes = ?
+       WHERE id = ?
+       RETURNING *`,
+    )
+    .get(logged_at ?? new Date().toISOString(), chemical, amount, unit ?? "oz", notes ?? null, id);
+
+  return Response.json(result);
+}
+
 export function remove(userId: string, id: number): Response {
   const row = db.query("SELECT id FROM chemical_logs WHERE id = ? AND user_id = ?").get(id, userId);
   if (!row) return Response.json({ error: "Not found" }, { status: 404 });

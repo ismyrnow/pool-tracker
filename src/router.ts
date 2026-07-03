@@ -44,6 +44,7 @@ export async function router(req: Request): Promise<Response> {
     }
     if (path.match(/^\/api\/tests\/\d+$/)) {
       const id = Number(path.split("/")[3]);
+      if (method === "PUT") return cors(await testRoutes.update(userId, id, req));
       if (method === "DELETE") return cors(testRoutes.remove(userId, id));
     }
     if (path === "/api/chemicals") {
@@ -52,6 +53,7 @@ export async function router(req: Request): Promise<Response> {
     }
     if (path.match(/^\/api\/chemicals\/\d+$/)) {
       const id = Number(path.split("/")[3]);
+      if (method === "PUT") return cors(await chemicalRoutes.update(userId, id, req));
       if (method === "DELETE") return cors(chemicalRoutes.remove(userId, id));
     }
     if (path === "/api/maintenance") {
@@ -60,6 +62,7 @@ export async function router(req: Request): Promise<Response> {
     }
     if (path.match(/^\/api\/maintenance\/\d+$/)) {
       const id = Number(path.split("/")[3]);
+      if (method === "PUT") return cors(await maintenanceRoutes.update(userId, id, req));
       if (method === "DELETE") return cors(maintenanceRoutes.remove(userId, id));
     }
     if (path === "/api/settings") {

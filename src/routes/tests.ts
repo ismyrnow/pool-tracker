@@ -53,6 +53,49 @@ export async function create(userId: string, req: Request): Promise<Response> {
   return Response.json(result, { status: 201 });
 }
 
+export async function update(userId: string, id: number, req: Request): Promise<Response> {
+  const existing = db
+    .query("SELECT id FROM test_logs WHERE id = ? AND user_id = ?")
+    .get(id, userId);
+  if (!existing) return Response.json({ error: "Not found" }, { status: 404 });
+
+  const body = await req.json();
+  const {
+    logged_at,
+    kit_type,
+    free_chlorine,
+    combined_chlorine,
+    ph,
+    alkalinity,
+    calcium_hardness,
+    cya,
+    notes,
+  } = body;
+
+  const result = db
+    .query(
+      `UPDATE test_logs
+       SET logged_at = ?, kit_type = ?, free_chlorine = ?, combined_chlorine = ?,
+           ph = ?, alkalinity = ?, calcium_hardness = ?, cya = ?, notes = ?
+       WHERE id = ?
+       RETURNING *`,
+    )
+    .get(
+      logged_at ?? new Date().toISOString(),
+      kit_type ?? "drop",
+      free_chlorine ?? null,
+      combined_chlorine ?? null,
+      ph ?? null,
+      alkalinity ?? null,
+      calcium_hardness ?? null,
+      cya ?? null,
+      notes ?? null,
+      id,
+    );
+
+  return Response.json(result);
+}
+
 export function remove(userId: string, id: number): Response {
   const row = db.query("SELECT id FROM test_logs WHERE id = ? AND user_id = ?").get(id, userId);
   if (!row) return Response.json({ error: "Not found" }, { status: 404 });
