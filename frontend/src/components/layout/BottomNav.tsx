@@ -35,8 +35,8 @@ export function BottomNav({ active, onChange, fabOpen, setFabOpen, onPick }: Pro
         onClick={() => onChange(ITEMS[1].key)}
       />
 
-      {/* Center FAB, lifted above the nav's top edge */}
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+      {/* Center FAB, lifted so it only slightly protrudes above the nav's top edge */}
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[10px]">
         <Fab open={fabOpen} setOpen={setFabOpen} onPick={onPick} />
       </div>
     </div>
