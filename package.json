@@ -17,6 +17,7 @@
     "format:check": "oxfmt --check src/ frontend/src/ e2e/ scripts/",
     "test": "bun test src/",
     "smoke": "bun scripts/smoke.ts",
+    "db:reset": "rm -f data/pool.db data/pool.db-wal data/pool.db-shm",
     "test:e2e": "playwright test --config=e2e/playwright.config.ts"
   },
   "dependencies": {
