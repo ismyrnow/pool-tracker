@@ -5,6 +5,9 @@ import { SetupPage } from "@/pages/SetupPage";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { HistoryPage } from "@/pages/HistoryPage";
 import { SettingsPage } from "@/pages/SettingsPage";
+import { EditTestForm } from "@/pages/edit/EditTestForm";
+import { EditChemicalForm } from "@/pages/edit/EditChemicalForm";
+import { EditMaintenanceForm } from "@/pages/edit/EditMaintenanceForm";
 import { AppShell } from "@/components/layout/AppShell";
 
 export default function App() {
@@ -22,6 +25,9 @@ export default function App() {
           <Route path="/history" element={<HistoryPage />} />
         </Route>
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/tests/:id/edit" element={<EditTestForm />} />
+        <Route path="/chemicals/:id/edit" element={<EditChemicalForm />} />
+        <Route path="/maintenance/:id/edit" element={<EditMaintenanceForm />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

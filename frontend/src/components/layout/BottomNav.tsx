@@ -20,13 +20,21 @@ interface Props {
 export function BottomNav({ active, onChange, fabOpen, setFabOpen, onPick }: Props) {
   return (
     <div className="flex-shrink-0 grid grid-cols-3 items-center px-3 pb-[calc(8px+env(safe-area-inset-bottom))] pt-2 bg-background/90 backdrop-blur border-t border-border">
-      <NavTab item={ITEMS[0]} active={active === ITEMS[0].key} onClick={() => onChange(ITEMS[0].key)} />
+      <NavTab
+        item={ITEMS[0]}
+        active={active === ITEMS[0].key}
+        onClick={() => onChange(ITEMS[0].key)}
+      />
 
       <div className="flex items-center justify-center">
         <Fab open={fabOpen} setOpen={setFabOpen} onPick={onPick} />
       </div>
 
-      <NavTab item={ITEMS[1]} active={active === ITEMS[1].key} onClick={() => onChange(ITEMS[1].key)} />
+      <NavTab
+        item={ITEMS[1]}
+        active={active === ITEMS[1].key}
+        onClick={() => onChange(ITEMS[1].key)}
+      />
     </div>
   );
 }

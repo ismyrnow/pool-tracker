@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import {
   Select,
@@ -57,6 +58,8 @@ const TAB_SEGMENTS = [
 ];
 
 type Tab = (typeof TAB_SEGMENTS)[number]["value"];
+
+const TAB_VALUES = TAB_SEGMENTS.map((s) => s.value) as readonly Tab[];
 
 function TestResultsTab() {
   const [metricKey, setMetricKey] = useState<keyof TestLog>("free_chlorine");
@@ -158,7 +161,10 @@ function MaintenanceTab() {
 }
 
 export function HistoryPage() {
-  const [tab, setTab] = useState<Tab>("tests");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const raw = searchParams.get("tab");
+  const tab: Tab = TAB_VALUES.includes(raw as Tab) ? (raw as Tab) : "tests";
+  const setTab = (t: Tab) => setSearchParams({ tab: t }, { replace: true });
 
   return (
     <div className="flex flex-col gap-3.5">
