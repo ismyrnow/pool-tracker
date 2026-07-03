@@ -43,7 +43,7 @@ export function Fab({ open, setOpen, onPick }: Props) {
         onClick={() => setOpen(!open)}
         aria-label="Add log"
         className={cn(
-          "relative z-50 w-14 h-14 rounded-full grid place-items-center bg-primary text-primary-foreground shadow-lg transition-transform duration-200",
+          "relative z-50 w-14 h-14 rounded-full grid place-items-center bg-primary text-primary-foreground shadow-lg ring-4 ring-background transition-transform duration-200",
           open && "rotate-45",
         )}
       >
