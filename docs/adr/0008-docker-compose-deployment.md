@@ -1,3 +1,3 @@
 # Docker Compose for Self-Hosted Deployment
 
-Two services: `api` (Bun, port 3001) and `web` (Nginx, port 5173). Nginx serves the built frontend and proxies `/api` requests to the backend, so the browser only ever talks to one origin. A `./data` volume mount persists the SQLite database outside the container lifecycle.
+A single service: one Bun container that both serves the API and hosts the built frontend from `dist/`. `Bun.serve` handles `/api/*` requests and falls back to serving static files (and `index.html`) for everything else, so the browser only ever talks to one origin — no separate web server and no CORS. A `./data` volume mount persists the SQLite database outside the container lifecycle.
