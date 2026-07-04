@@ -1,5 +1,6 @@
 import { auth, hasUsers } from "./lib/auth";
 import { cors, jsonError } from "./lib/middleware";
+import { db } from "./db/client";
 import * as poolRoutes from "./routes/pool";
 import * as testRoutes from "./routes/tests";
 import * as chemicalRoutes from "./routes/chemicals";
@@ -13,6 +14,16 @@ export async function router(req: Request): Promise<Response> {
   const method = req.method;
 
   if (method === "OPTIONS") return cors(new Response(null, { status: 204 }));
+
+  if (path === "/api/health" && method === "GET") {
+    try {
+      db.query("SELECT 1").get();
+      return cors(Response.json({ status: "ok" }));
+    } catch (err) {
+      console.error(err);
+      return cors(jsonError("Database unavailable", 503));
+    }
+  }
 
   if (path.startsWith("/api/auth/")) {
     if (path === "/api/auth/sign-up/email" && method === "POST" && hasUsers()) {
