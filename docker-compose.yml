@@ -1,14 +1,18 @@
+# Reference deployment for the published image. Import into your container
+# manager (Portainer, Dockge, ...) or run directly. See the Hosting section
+# of the README for BETTER_AUTH_SECRET, the data volume, and backups.
 services:
-  app:
-    build: .
+  pool-tracker:
+    image: ismyrnow/pool-tracker:latest
+    container_name: pool-tracker
+    restart: unless-stopped
     ports:
       - "3001:3001"
     environment:
-      - PORT=3001
-      - NODE_ENV=production
-      - DB_PATH=/data/pool.db
+      # Required. Generate with: openssl rand -base64 32
       - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+      # The external origin you reach the app at (e.g. https://pool.example.com)
       - BETTER_AUTH_URL=${BETTER_AUTH_URL:-http://localhost:3001}
     volumes:
+      # SQLite database. Back up by copying this folder (see README).
       - ./data:/data
-    restart: unless-stopped
