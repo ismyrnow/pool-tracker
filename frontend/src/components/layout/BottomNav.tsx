@@ -19,7 +19,7 @@ interface Props {
 
 export function BottomNav({ active, onChange, fabOpen, setFabOpen, onPick }: Props) {
   return (
-    <div className="relative flex-shrink-0 grid grid-cols-3 items-center px-3 pb-[calc(6px+env(safe-area-inset-bottom))] pt-1 bg-background/90 backdrop-blur border-t border-border">
+    <div className="relative z-50 flex-shrink-0 grid grid-cols-3 items-center px-3 pb-[calc(6px+env(safe-area-inset-bottom))] pt-1 bg-background/90 backdrop-blur border-t border-border">
       <NavTab
         item={ITEMS[0]}
         active={active === ITEMS[0].key}
